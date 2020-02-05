@@ -40,9 +40,9 @@ class ChartContent(Content):
     """
 
     # Required chart metadata
-    name = models.CharField(empty=False)
-    version = models.CharField(empty=False)
-    digest = models.CharField(empty=False, max_length=64) # SHA256 digest
+    name = models.CharField(null=False)
+    version = models.CharField(null=False)
+    digest = models.CharField(null=False, max_length=64) # SHA256 digest
 
     # Optional chart metadata
     app_version = models.CharField()
