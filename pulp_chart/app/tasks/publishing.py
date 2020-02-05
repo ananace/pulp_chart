@@ -54,7 +54,7 @@ def write_content(publication):
     entries = {}
     for content in ChartContent.objects.filter(
         pk__in=publication.repository_version.content
-    ).order_by('name'):
+    ).order_by('name','-created'):
         artifacts = content.contentartifact_set.all()
         for artifact in artifacts:
             published = PublishedArtifact(

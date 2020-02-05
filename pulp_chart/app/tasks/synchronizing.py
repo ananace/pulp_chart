@@ -1,5 +1,6 @@
 from gettext import gettext as _
 import logging
+from urllib.parse import urljoin
 import yaml
 
 from pulpcore.plugin.models import Artifact, ProgressReport, Remote, Repository
@@ -71,24 +72,37 @@ class ChartFirstStage(Stage):
             out_q (asyncio.Queue): The out_q to send `DeclarativeContent` objects to
 
         """
-        downloader = self.remote.get_downloader(url=self.remote.url)
-        result = await downloader.run()
-        # Use ProgressReport to report progress
-        for entry in self.read_index_yaml(result.path):
-            content_entry = dict(filter(lambda e:e[0] not in ('url'), entry.items()))
+        remote_url = self.remote.url
+        if not remote_url.endswith('/index.yaml'):
+            remote_url += '/index.yaml'
 
-            unit = ChartContent(**content_entry)
-            artifact = Artifact(sha256=entry['digest'])
+        index_yaml = []
+        with ProgressReport(message="Downloading Index", code="downloading.metadata") as pb:
+            downloader = self.remote.get_downloader(url=remote_url)
+            result = await downloader.run()
+            index_yaml = list(self.read_index_yaml(result.path))
+            pb.increment()
 
-            da = DeclarativeArtifact(
-                artifact,
-                entry['url'],
-                "{}-{}.tgz".format(entry['name'], entry['version']),
-                self.remote,
-                deferred_download=self.deferred_download,
-            )
-            dc = DeclarativeContent(content=unit, d_artifacts=[da])
-            await self.put(dc)
+        with ProgressReport(message="Parsing Entries", code="parsing.metadata") as pb:
+            pb.total = len(index_yaml)
+            pb.save()
+
+            for entry in index_yaml:
+                content_entry = dict(filter(lambda e:e[0] not in ('url'), entry.items()))
+
+                unit = ChartContent(**content_entry)
+                artifact = Artifact(sha256=entry['digest'])
+
+                da = DeclarativeArtifact(
+                    artifact,
+                    urljoin(remote_url, entry['url']),
+                    "{}-{}.tgz".format(entry['name'], entry['version']),
+                    self.remote,
+                    deferred_download=self.deferred_download,
+                )
+                dc = DeclarativeContent(content=unit, d_artifacts=[da])
+                pb.increment()
+                await self.put(dc)
 
     def read_index_yaml(self, path):
         """
