@@ -1,0 +1,33 @@
+# This config represents the latest values used when running the plugin-template. Any settings that
+# were not present before running plugin-template have been added with their default values.
+
+additional_plugins: []
+black: true
+check_commit_message: true
+cherry_pick_automation: false
+coverage: false
+deploy_client_to_pypi: true
+deploy_client_to_rubygems: true
+deploy_daily_client_to_pypi: true
+deploy_daily_client_to_rubygems: true
+deploy_to_pypi: true
+docker_fixtures: false
+docs_test: true
+plugin_app_label: chart
+plugin_camel: PulpChart
+plugin_camel_short: Chart
+plugin_caps: PULP_CHART
+plugin_caps_short: CHART
+plugin_dash: pulp-chart
+plugin_dash_short: chart
+plugin_name: pulp_chart
+plugin_snake: pulp_chart
+pulp_settings: null
+pulpcore_branch: master
+pydocstyle: true
+pypi_username: null
+stable_branch: null
+test_bindings: true
+test_performance: false
+travis_notifications: null
+
