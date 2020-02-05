@@ -55,7 +55,7 @@ class ChartContent(Content):
 
     class Meta:
         default_related_name = "%(app_label)s_%(model_name)s"
-        unique_together = (name, version, digest)
+        unique_together = ('name', 'version', 'digest')
 
 
 class ChartPublication(Publication):
