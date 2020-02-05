@@ -17,7 +17,7 @@ from . import models
 # If you want create content through upload, use "SingleArtifactContentUploadSerializer"
 # If you change this, make sure to do so on "fields" below, also.
 # Make sure your choice here matches up with the create() method of your viewset.
-class ChartContentSerializer(platform.SingleArtifactContentSerializer):
+class ChartContentSerializer(platform.SingleArtifactContentUploadSerializer):
     """
     A Serializer for ChartContent.
 

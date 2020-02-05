@@ -7,6 +7,7 @@ Check `Plugin Writer's Guide`_ for more details.
 
 from logging import getLogger
 
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 from pulpcore.plugin.models import (
@@ -40,16 +41,19 @@ class ChartContent(Content):
     """
 
     # Required chart metadata
-    name = models.CharField(null=False)
-    version = models.CharField(null=False)
+    name = models.TextField(null=False)
+    version = models.TextField(null=False)
     digest = models.CharField(null=False, max_length=64) # SHA256 digest
 
     # Optional chart metadata
-    app_version = models.CharField()
-    description = models.TextField()
-    icon = models.TextField()
+    app_version = models.TextField(null=True)
+    description = models.TextField(null=True)
+    icon = models.TextField(null=True)
 
-    # keywords = models.TextField()
+    keywords = ArrayField(
+        models.TextField(null=False),
+        null=True
+    )
 
     TYPE = "chart"
 

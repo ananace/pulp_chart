@@ -36,7 +36,7 @@ class ChartContentFilter(core.ContentFilter):
         ]
 
 
-class ChartContentViewSet(core.ContentViewSet):
+class ChartContentViewSet(core.SingleArtifactContentUploadViewSet):
     """
     A ViewSet for ChartContent.
 
