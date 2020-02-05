@@ -48,7 +48,8 @@ class ChartContent(Content):
     app_version = models.CharField()
     description = models.TextField()
     icon = models.TextField()
-    keywords = models.TextField()
+
+    # keywords = models.TextField()
 
     TYPE = "chart"
 
