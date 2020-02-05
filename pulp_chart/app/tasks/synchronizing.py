@@ -108,6 +108,7 @@ class ChartFirstStage(Stage):
 
                     'url': version['urls'][0],
 
+                    'created': version.get('created'),
                     'app_version': version.get('appVersion'),
                     'description': version.get('description'),
                     'icon': version.get('icon'),

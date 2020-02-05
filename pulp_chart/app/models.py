@@ -9,6 +9,7 @@ from logging import getLogger
 
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.utils import timezone
 
 from pulpcore.plugin.models import (
     Content,
@@ -44,6 +45,8 @@ class ChartContent(Content):
     name = models.TextField(null=False)
     version = models.TextField(null=False)
     digest = models.CharField(null=False, max_length=64) # SHA256 digest
+
+    created = models.DateTimeField(default=timezone.now)
 
     # Optional chart metadata
     app_version = models.TextField(null=True)
