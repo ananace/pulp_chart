@@ -79,7 +79,8 @@ def write_content(publication):
         if content.name not in entries:
             entries[content.name] = []
         entries[content.name].append(
-            {k: v for k, v in entry.items() if (v is not None and v != []) })
+            {k: v for k, v in entry.items() if (v is not None and v != []) }
+        )
 
     doc = {
         'apiVersion': 'v1',
