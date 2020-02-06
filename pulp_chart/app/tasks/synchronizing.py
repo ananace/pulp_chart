@@ -120,6 +120,7 @@ class ChartFirstStage(Stage):
                     'version': version['version'],
                     'digest': version['digest'],
 
+                    # TODO: Handle multiple URLs better, maybe failover?
                     'url': version['urls'][0],
 
                     'created': version.get('created'),
