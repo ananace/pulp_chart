@@ -39,17 +39,17 @@ def publish(repository_version_pk):
     )
     with WorkingDirectory():
         with ChartPublication.create(repository_version) as publication:
-            write_content(publication)
+            publish_chart_content(publication)
 
     log.info(_("Publication: {publication} created").format(publication=publication.pk))
 
 
-def write_content(publication):
+def publish_chart_content(publication):
     """
-    Write content data for a publication to disk
+    Create published artifacts and metadata for a publication
 
     Args:
-        publication (ChartPublication): The publication to write to disk
+        publication (ChartPublication): The publication to store
     """
     entries = {}
     for content in ChartContent.objects.filter(
@@ -78,6 +78,8 @@ def write_content(publication):
 
         if content.name not in entries:
             entries[content.name] = []
+
+        # Strip away empty keys when building metadata
         entries[content.name].append(
             {k: v for k, v in entry.items() if (v is not None and v != []) }
         )
@@ -89,7 +91,6 @@ def write_content(publication):
     }
 
     with open('index.yaml', 'w') as index:
-        log.info("Writing file {file}".format(file=os.path.abspath(index.name)))
         index.write(yaml.dump(doc))
 
     index = PublishedMetadata.create_from_file(
