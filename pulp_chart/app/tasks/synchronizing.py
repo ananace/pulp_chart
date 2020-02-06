@@ -111,7 +111,7 @@ class ChartFirstStage(Stage):
         Args:
             path: Path to the metadata file
         """
-        doc = yaml.load(open(path))
+        doc = yaml.load(open(path), loader=yaml.SafeLoader)
 
         for name, versions in doc['entries'].items():
             for version in versions:
