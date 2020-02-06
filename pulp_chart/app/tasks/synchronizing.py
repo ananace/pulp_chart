@@ -17,7 +17,7 @@ from pulp_chart.app.models import ChartContent, ChartRemote
 log = logging.getLogger(__name__)
 
 
-def synchronize(remote_pk, repository_pk):# , mirror):
+def synchronize(remote_pk, repository_pk, mirror):
     """
     Sync content from the remote repository.
 
@@ -41,7 +41,7 @@ def synchronize(remote_pk, repository_pk):# , mirror):
     # Interpret policy to download Artifacts or not
     deferred_download = remote.policy != Remote.IMMEDIATE
     first_stage = ChartFirstStage(remote, deferred_download)
-    DeclarativeVersion(first_stage, repository, mirror=False).create()
+    DeclarativeVersion(first_stage, repository, mirror=mirror).create()
 
 
 class ChartFirstStage(Stage):

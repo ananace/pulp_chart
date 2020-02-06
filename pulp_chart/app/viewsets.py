@@ -160,11 +160,16 @@ class ChartRepositoryViewSet(core.RepositoryViewSet, ModifyRepositoryActionMixin
         serializer = RepositorySyncURLSerializer(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
         remote = serializer.validated_data.get("remote")
+        mirror = serializer.validated_data.get('mirror')
 
         result = enqueue_with_reservation(
             tasks.synchronize,
             [repository, remote],
-            kwargs={"remote_pk": remote.pk, "repository_pk": repository.pk},
+            kwargs={
+                "remote_pk": remote.pk,
+                "repository_pk": repository.pk,
+                "mirror": mirror
+            },
         )
         return core.OperationPostponedResponse(result, request)
 
