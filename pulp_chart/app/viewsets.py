@@ -39,12 +39,6 @@ class ChartContentFilter(core.ContentFilter):
 class ChartContentViewSet(core.SingleArtifactContentUploadViewSet):
     """
     A ViewSet for ChartContent.
-
-    Define endpoint name which will appear in the API endpoint for this content type.
-    For example::
-        http://pulp.example.com/pulp/api/v3/content/chart/units/
-
-    Also specify queryset and serializer for ChartContent.
     """
 
     endpoint_name = "chart"
@@ -122,9 +116,6 @@ class ChartRemoteFilter(RemoteFilter):
 class ChartRemoteViewSet(core.RemoteViewSet):
     """
     A ViewSet for ChartRemote.
-
-    Similar to the ChartContentViewSet above, define endpoint_name,
-    queryset and serializer, at a minimum.
     """
 
     endpoint_name = "chart"
@@ -135,9 +126,6 @@ class ChartRemoteViewSet(core.RemoteViewSet):
 class ChartRepositoryViewSet(core.RepositoryViewSet, ModifyRepositoryActionMixin):
     """
     A ViewSet for ChartRepository.
-
-    Similar to the ChartContentViewSet above, define endpoint_name,
-    queryset and serializer, at a minimum.
     """
 
     endpoint_name = "chart"
@@ -186,9 +174,6 @@ class ChartRepositoryVersionViewSet(core.RepositoryVersionViewSet):
 class ChartPublicationViewSet(core.PublicationViewSet):
     """
     A ViewSet for ChartPublication.
-
-    Similar to the ChartContentViewSet above, define endpoint_name,
-    queryset and serializer, at a minimum.
     """
 
     endpoint_name = "chart"
@@ -223,9 +208,6 @@ class ChartPublicationViewSet(core.PublicationViewSet):
 class ChartDistributionViewSet(core.BaseDistributionViewSet):
     """
     A ViewSet for ChartDistribution.
-
-    Similar to the ChartContentViewSet above, define endpoint_name,
-    queryset and serializer, at a minimum.
     """
 
     endpoint_name = "chart"
