@@ -1,10 +1,3 @@
-"""
-Check `Plugin Writer's Guide`_ for more details.
-
-.. _Plugin Writer's Guide:
-    http://docs.pulpproject.org/en/3.0/nightly/plugins/plugin-writer/index.html
-"""
-
 from logging import getLogger
 
 from django.contrib.postgres.fields import ArrayField
@@ -26,19 +19,6 @@ logger = getLogger(__name__)
 class ChartContent(Content):
     """
     The "chart" content type.
-
-    Define fields you need for your new content type and
-    specify uniqueness constraint to identify unit of this type.
-
-    For example::
-
-        field1 = models.TextField()
-        field2 = models.IntegerField()
-        field3 = models.CharField()
-
-        class Meta:
-            default_related_name = "%(app_label)s_%(model_name)s"
-            unique_together = (field1, field2)
     """
 
     # Required chart metadata
@@ -68,8 +48,6 @@ class ChartContent(Content):
 class ChartPublication(Publication):
     """
     A Publication for ChartContent.
-
-    Define any additional fields for your new publication if needed.
     """
 
     TYPE = "chart"
@@ -81,8 +59,6 @@ class ChartPublication(Publication):
 class ChartRemote(Remote):
     """
     A Remote for ChartContent.
-
-    Define any additional fields for your new remote if needed.
     """
 
     TYPE = "chart"
@@ -94,8 +70,6 @@ class ChartRemote(Remote):
 class ChartRepository(Repository):
     """
     A Repository for ChartContent.
-
-    Define any additional fields for your new repository if needed.
     """
 
     TYPE = "chart"
@@ -109,8 +83,6 @@ class ChartRepository(Repository):
 class ChartDistribution(PublicationDistribution):
     """
     A Distribution for ChartContent.
-
-    Define any additional fields for your new distribution if needed.
     """
 
     TYPE = "chart"
