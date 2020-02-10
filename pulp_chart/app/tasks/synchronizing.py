@@ -76,6 +76,7 @@ class ChartFirstStage(Stage):
         if not remote_url.endswith('/index.yaml'):
             remote_url += '/index.yaml'
 
+        # TODO Skip reading generator to list?
         index_yaml = []
         with ProgressReport(message="Downloading Index", code="downloading.metadata") as pb:
             downloader = self.remote.get_downloader(url=remote_url)
