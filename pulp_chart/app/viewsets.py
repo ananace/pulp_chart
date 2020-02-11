@@ -55,47 +55,19 @@ class ChartContentViewSet(core.SingleArtifactContentUploadViewSet):
         of the Content model.
         """
         raise NotImplementedError("FIXME")
-        # This requires some choice. Depending on the properties of your content type - whether it
-        # can have zero, one, or many artifacts associated with it, and whether any properties of
-        # the artifact bleed into the content type (such as the digest), you may want to make
-        # those changes here.
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # A single artifact per content, serializer subclasses SingleArtifactContentSerializer
-        # ======================================
-        # _artifact = serializer.validated_data.pop("_artifact")
-        # # you can save model fields directly, e.g. .save(digest=_artifact.sha256)
-        # content = serializer.save()
-        #
-        # if content.pk:
-        #     ContentArtifact.objects.create(
-        #         artifact=artifact,
-        #         content=content,
-        #         relative_path= ??
-        #     )
-        # =======================================
+        _artifact = serializer.validated_data.pop("_artifact")
+        content = serializer.save()
 
-        # Many artifacts per content, serializer subclasses MultipleArtifactContentSerializer
-        # =======================================
-        # _artifacts = serializer.validated_data.pop("_artifacts")
-        # content = serializer.save()
-        #
-        # if content.pk:
-        #   # _artifacts is a dictionary of {"relative_path": "artifact"}
-        #   for relative_path, artifact in _artifacts.items():
-        #       ContentArtifact.objects.create(
-        #           artifact=artifact,
-        #           content=content,
-        #           relative_path=relative_path
-        #       )
-        # ========================================
-
-        # No artifacts, serializer subclasses NoArtifactContentSerialier
-        # ========================================
-        # content = serializer.save()
-        # ========================================
+        if content.pk:
+           ContentArtifact.objects.create(
+               artifact=artifact,
+               content=content,
+               relative_path=
+           )
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
