@@ -66,7 +66,7 @@ class ChartContentViewSet(core.SingleArtifactContentUploadViewSet):
            ContentArtifact.objects.create(
                artifact=artifact,
                content=content,
-               relative_path=
+               relative_path='',  # FIXME
            )
 
         headers = self.get_success_headers(serializer.data)
